@@ -57,7 +57,7 @@ const AdminDashboard = () => {
         if (value) queryParams.append(key, value);
       });
 
-      const res = await fetch(`/api/problems?${queryParams}`, {
+      const res = await fetch(`https://campus-issue-tracker-ezpa.onrender.com/api/problems?${queryParams}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -91,7 +91,7 @@ const AdminDashboard = () => {
   const handleStatusChange = async (problemId, newStatus) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`/api/problems/${problemId}/status`, {
+      const res = await fetch(`https://campus-issue-tracker-ezpa.onrender.com/api/problems/${problemId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

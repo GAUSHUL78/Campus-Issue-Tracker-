@@ -77,7 +77,7 @@ const ReportProblem = () => {
       }
 
       console.log('Submitting form with token:', token);
-      const res = await fetch('/api/problems', {
+      const res = await fetch('https://campus-issue-tracker-ezpa.onrender.com/api/problems', {
         method: 'POST',
         body: formData,
         headers: {

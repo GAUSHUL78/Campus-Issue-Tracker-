@@ -42,7 +42,7 @@ const StudentDashboard = () => {
       setLoading(true);
       setError('');
       try {
-        const res = await fetch('/api/problems/my', {
+        const res = await fetch('https://campus-issue-tracker-ezpa.onrender.com/api/problems/my', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -90,7 +90,7 @@ const StudentDashboard = () => {
 
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`/api/problems/${problemId}`, {
+      const response = await fetch(`https://campus-issue-tracker-ezpa.onrender.com/api/problems/${problemId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
