@@ -10,18 +10,11 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors({
-  origin: 'https://campus-issue-tracker-q28h.vercel.app/',
-  credentials: true,
-}));
+// ✅ Allow all origins (no restriction)
+app.use(cors());
 
-// Serve uploaded files with CORS headers
-app.use('/uploads', (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://campus-issue-tracker-q28h.vercel.app/');
-  res.header('Access-Control-Allow-Methods', 'GET');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-}, express.static('uploads'));
+// ✅ Serve uploaded files with no restriction
+app.use('/uploads', cors(), express.static('uploads'));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/sliet-civic', {
@@ -31,7 +24,7 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/sliet-civic
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
-// Placeholder for routes
+// Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/problems', require('./routes/problems'));
 app.use('/api/developments', require('./routes/developments'));
@@ -40,7 +33,7 @@ app.get('/', (req, res) => {
   res.send('SLIET Civic Sense API Running');
 });
 
-// Global error handler to always return JSON
+// Global error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: 'Internal server error', error: err.message });
