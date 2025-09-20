@@ -6,15 +6,28 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Put the exact origin of your frontend here (no trailing slash!)
+const FRONTEND_URL = 'https://campus-issue-tracker-q28h.vercel.app';
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ✅ Allow all origins (no restriction)
-app.use(cors());
+// ✅ CORS configured for credentials
+app.use(cors({
+  origin: FRONTEND_URL,           // must be exact origin
+  credentials: true,              // allow cookies
+  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization']
+}));
 
-// ✅ Serve uploaded files with no restriction
-app.use('/uploads', cors(), express.static('uploads'));
+// ✅ Serve uploaded files with the same CORS settings
+app.use('/uploads', cors({
+  origin: FRONTEND_URL,
+  credentials: true,
+  methods: ['GET'],
+  allowedHeaders: ['Content-Type']
+}), express.static('uploads'));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/sliet-civic', {
