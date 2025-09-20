@@ -11,13 +11,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'https://campus-issue-tracker-q28h.vercel.app/',
   credentials: true,
 }));
 
 // Serve uploaded files with CORS headers
 app.use('/uploads', (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+  res.header('Access-Control-Allow-Origin', 'https://campus-issue-tracker-q28h.vercel.app/');
   res.header('Access-Control-Allow-Methods', 'GET');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
